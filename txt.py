@@ -35,32 +35,24 @@ def ler_arquivo():
         #Confirmação de fechada de arquivo
         arquivo.close()
 
-def sobrescrever_arquivo():
-    arquivo = abrir_arquivo('valores_celular.txt', 'w')
+def sobrescrever_criar_arquivo():
+    arquivo = abrir_arquivo('valores_notebook.txt', 'w')
 
     if arquivo == False:
         print("FALHA AO ABRIR ARQUIVO - VERIFIQUE!")
     else:
-        menu()
-        opcao = ''
-        while opcao != 's':
-            opcao = input("Digite uma opção: ").lower()
-            match opcao:
-                case '1':
-                    valor = input("Adicione o valor ao arquivo: ")
-                    arquivo.write(str(valor) + '\n')
-                    os.system('cls')
-                    menu()
-
+        os.system('cls')
+        valor = ''
+        print("Digite um valor para adicionar ao arquivo ou digite s para sair: ")
+        while valor != 's':
+            valor = input().lower()
+            match valor:
                 case 's':
                     os.system('cls')
                     return print("Saindo!")
 
                 case _:
-                    os.system('cls')
-                    print("Opcao inválida")
-                    print("Digite uma das seguintes opções")
-                    menu()
+                    arquivo.write(str(valor) + '\n')
     arquivo.close()
 
 def zerar_arquivo_arquivo():
@@ -78,23 +70,30 @@ def ler_escrever_arquivo() :
         print("- VALORES ATUAIS -")
         for valor in arquivo:
             print(valor)
-        
-    resposta = ''
-    while resposta != '2':    
-        print(f"Deseja adicionar valores ao arquivo {arquivo.name} ?")
-        resposta = input(""" Digite 1 para SIM\n Digite 2 para NÃO\n""").lower()
 
+    print(f"Deseja adicionar valores ao arquivo {arquivo.name} ?")
+    print("""Digite s para SIM ou Digite n para NAO""")
+    opcao = input("Resposta: ").lower()
+    if opcao == 's':
         os.system('cls')
-        if resposta == '1':
-            texto_novo = input("Digite o valor que você quer adicionar ao arquivo: ")
-            arquivo.write(str(texto_novo) + '\n')
+        print("Digite os valores ou digite S para SAIR")
+        valor = ''
 
-        elif resposta == '2':
-            print("Saindo!")
-        else:
-            print("Opção inválida!")
-    
-    arquivo.close()
+        while valor != 's': 
+            valor = input().lower()
+            match valor:
+                case 's':
+                    os.system('cls')
+                    print("Saindo!")   
+                case _: 
+                    arquivo.write(str(valor) + '\n')
+
+    elif opcao == 'n':
+        print("Ok, Saindo!")
+    else:
+        print("Opção inválida")
+        ler_escrever_arquivo()
+        arquivo.close()
     
 def acrescentar_arquivo():
     arquivo = abrir_arquivo('valores_celular.txt', 'a')
@@ -118,8 +117,7 @@ def acrescentar_arquivo():
             print("Opção inválida!")
     arquivo.close()
 
-acrescentar_arquivo()
-    
+ler_escrever_arquivo()
 
 
         
