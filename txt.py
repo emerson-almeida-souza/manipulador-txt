@@ -4,36 +4,54 @@
 'r+'-> Usado para ler e escrever algo
 'a' -> Usado para acrescentar algo
 '''
-#Deixar o user digitar os valores
 #programa que lê e escreve e envia o arquivo via e-mail
-#Deixar ele escolher o txt
-#Criar menu
-
+#Criar um find no texto
 import os
 
 def menu():
     print("Opcao '1': Inserir um valor.")
     print("Opcao 's': Para sair.")
 
-def abrir_arquivo(file, mode):
+def criar_arquivo_txt(nome):
+    arquivo = abrir_arquivo(f'{nome}', 'x')
+    return arquivo
+
+def abrir_arquivo(caminho, modo = 'r', nome = ''):
+    nome = caminho
     try:
-        arquivo = open(file=file, mode=mode, encoding='utf-8')
+        arquivo = open(file=caminho, mode=modo, encoding='utf-8')
     except:
-        arquivo = False
-        print("Ocorreu um erro ao abrir o arquivo!")
+        print(f"O arquivo {nome} não existe, deseja criar?")
+        print("S para SIM, n para NÃO\n")
+        resposta = input()
+        if resposta == 's':
+            arquivo = criar_arquivo_txt(nome)
+        elif resposta == 'n':
+            arquivo = False
+            print("Ok, saindo!")
+        else:
+            print("Opção inválida")
+            abrir_arquivo(caminho, modo)
     
     return arquivo
 
 def ler_arquivo():
-    arquivo = abrir_arquivo('valores_celular.txt', 'r')
+    os.system('cls')
+    arquivo = abrir_arquivo('teste3.txt', 'r')
 
     if arquivo == False:
         print("Ocorreu um erro ao ler o arquivo.")
     else:
+        linha = 1
+        print("-------------------------------------------------------------")
+        print('LINHA\t\tCONTEUDO')
         for valor in arquivo:
-            print(valor)
-        #Confirmação de fechada de arquivo
-        arquivo.close()
+            print('[{}]\t\t{}'.format(linha, valor))
+            linha = linha + 1
+        
+        print('\n\n' + f'O tamanho do arquivo é [{arquivo.tell()}] BYTES')
+        print(f"O arquivo tem {linha} linhas")
+        print("-------------------------------------------------------------")
 
 def sobrescrever_criar_arquivo():
     arquivo = abrir_arquivo('valores_notebook.txt', 'w')
@@ -67,9 +85,7 @@ def ler_escrever_arquivo() :
         print("Ocorreu um erro ao ler o arquivo.")
     else:
         os.system('cls')
-        print("- VALORES ATUAIS -")
-        for valor in arquivo:
-            print(valor)
+        ler_arquivo()
 
     print(f"Deseja adicionar valores ao arquivo {arquivo.name} ?")
     print("""Digite s para SIM ou Digite n para NAO""")
@@ -96,7 +112,7 @@ def ler_escrever_arquivo() :
         arquivo.close()
     
 def acrescentar_arquivo():
-    arquivo = abrir_arquivo('valores_celular.txt', 'a')
+    arquivo = abrir_arquivo('teste3.txt', 'a')
 
     if arquivo == False:
         print("Ocorreu um erro ao ler o arquivo.")
@@ -117,7 +133,9 @@ def acrescentar_arquivo():
             print("Opção inválida!")
     arquivo.close()
 
-ler_escrever_arquivo()
+abrir_arquivo("teste3.txt")
+acrescentar_arquivo()
+ler_arquivo()
 
 
         
