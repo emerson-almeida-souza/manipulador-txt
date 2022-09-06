@@ -13,28 +13,24 @@ def menu():
     print("Opcao '1': Inserir um valor.")
     print("Opcao 's': Para sair.")
 
-def criar_arquivo_txt(nomeArquivo):
-    arquivo = open(f'{nomeArquivo}.txt', 'x')
-    return arquivo
-
-def abrir_arquivo(caminho, modo = 'r', nomeArquivo = ''):
-    nomeArquivo = caminho
-    caminho = caminho + '.txt'
+def abrir_arquivo(nomeArquivo, modo):
+    os.system('cls')
+    nomeArquivo = nomeArquivo + '.txt'
     try:
-        arquivo = open(file=caminho, mode=modo, encoding='utf-8')
+        arquivo = open(file=nomeArquivo, mode=modo, encoding='utf-8')
     except:
         print(f"O arquivo {nomeArquivo} não existe, deseja criar?")
         print("S para SIM, n para NÃO")
         resposta = input().lower()
         if resposta == 's':
-            arquivo = criar_arquivo_txt(nomeArquivo)
+            arquivo = open(file = nomeArquivo, mode='x')
         elif resposta == 'n':
             arquivo = False
             print("Ok, saindo!")
         else:
             print("Opção inválida")
-            abrir_arquivo(caminho, modo)
-
+            abrir_arquivo(nomeArquivo, modo)
+            
     return arquivo
 
 def ler_arquivo(nomeArquivo):
@@ -44,7 +40,7 @@ def ler_arquivo(nomeArquivo):
     if arquivo == False:
         print(f"Ocorreu um erro ao ler o {nomeArquivo}.")
     else:
-        linha = 1
+        linha = 0
         print("-------------------------------------------------------------")
         print('LINHA\t\tCONTEUDO')
         for valor in arquivo:
@@ -56,6 +52,7 @@ def ler_arquivo(nomeArquivo):
         print("-------------------------------------------------------------")
 
 def sobrescrever_criar_arquivo(nomeArquivo):
+    os.system('cls')
     arquivo = abrir_arquivo(f'{nomeArquivo}', 'w')
 
     if arquivo == False:
@@ -76,15 +73,17 @@ def sobrescrever_criar_arquivo(nomeArquivo):
     arquivo.close()
 
 def zerar_arquivo_arquivo(nomeArquivo):
+    os.system('cls')
     arquivo = abrir_arquivo(f'{nomeArquivo}', 'w')
     arquivo.write(str(''))
     print(f"Arquivo {nomeArquivo} zerado com sucesso!")
 
-def ler_escrever_arquivo(nomeArquivo) :
+def ler_escrever_arquivo(nomeArquivo):
+    os.system('cls')
     arquivo = abrir_arquivo(f'{nomeArquivo}', 'r+')
 
     if arquivo == False:
-        print("Ocorreu um erro ao ler o {nomeArquivo}.")
+        print(f"Ocorreu um erro ao ler o {nomeArquivo}.")
     else:
         os.system('cls')
         ler_arquivo()
@@ -114,6 +113,7 @@ def ler_escrever_arquivo(nomeArquivo) :
         arquivo.close()
     
 def acrescentar_arquivo(nomeArquivo):
+    os.system('cls')
     arquivo = abrir_arquivo(f'{nomeArquivo}', 'a')
 
     if arquivo == False:
@@ -133,7 +133,17 @@ def acrescentar_arquivo(nomeArquivo):
             print("Opção inválida!")
     arquivo.close()
 
-ler_arquivo("valores_celular")
+def exibir_primeira_linha(nomeArquivo):
+    os.system('cls')
+    arquivo = abrir_arquivo(nomeArquivo, 'r')
+
+    tamanho_arquivo = arquivo.tell()
+    if tamanho_arquivo == 0:
+        ler_arquivo(nomeArquivo)
+    else:
+       print(arquivo.readline())
+
+exibir_primeira_linha("valores_celulares")
 
 
         
