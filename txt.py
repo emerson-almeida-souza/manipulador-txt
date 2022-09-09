@@ -3,6 +3,8 @@
 'w' -> Usado somente para escrever algo
 'r+'-> Usado para ler e escrever algo
 'a' -> Usado para acrescentar algo
+
+tell() -> Retorna posição atual do arquivo em bytes
 '''
 #programa que lê e escreve e envia o arquivo via e-mail
 #Criar um find no texto
@@ -137,13 +139,26 @@ def exibir_primeira_linha(nomeArquivo):
     os.system('cls')
     arquivo = abrir_arquivo(nomeArquivo, 'r')
 
-    tamanho_arquivo = arquivo.tell()
-    if tamanho_arquivo == 0:
+    tamanho_arquivo = arquivo.readlines()
+    if  len(tamanho_arquivo)== 0:
         ler_arquivo(nomeArquivo)
     else:
        print(arquivo.readline())
 
-exibir_primeira_linha("valores_celulares")
+def retorna_string(nomeArquivo):
+    arquivo = abrir_arquivo(nomeArquivo, 'r+')
+    string_arquivo = arquivo.read()
+
+    return string_arquivo
+
+def retorna_list(nomeArquivo):
+    arquivo = abrir_arquivo(nomeArquivo, 'r+')
+    # list_arquivo = arquivo.readlines() ADICIONA UM \n no final de cada linha
+    # com o list obtemos o mesmo resultado
+    list_arquivo = list(arquivo)
+
+    return list_arquivo
+
 
 
         
